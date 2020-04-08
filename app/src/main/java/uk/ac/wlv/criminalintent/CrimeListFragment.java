@@ -1,5 +1,6 @@
 package uk.ac.wlv.criminalintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.style.LeadingMarginSpan;
 import android.view.LayoutInflater;
@@ -32,16 +33,26 @@ public class CrimeListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     private void updateUI() {
 
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         List<Crime> crimes = crimeLab.getCrimes();
-        mAdapter = new CrimeAdapter(crimes);
-        mCrimeRecyclerView.setAdapter(mAdapter);
+       if(mAdapter == null){
+           mAdapter = new CrimeAdapter(crimes);
+           mCrimeRecyclerView.setAdapter(mAdapter);
+       }else {
+           mAdapter.notifyDataSetChanged();
+       }
 
     }
 
-    private class  CrimeHolder extends RecyclerView.ViewHolder{
+    private class  CrimeHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
@@ -50,6 +61,7 @@ public class CrimeListFragment extends Fragment {
 
         public CrimeHolder(View itewmView){
             super(itewmView);
+            itewmView.setOnClickListener(this);
             mTitleTextView = (TextView) itemView.findViewById(R.id.list_item_crime_title_text_view);
             mDateTextView = (TextView) itemView.findViewById(R.id.list_item_crime_date_text_view);
             mSolvedCheckBox = (CheckBox) itemView.findViewById(R.id.list_item_crime_solved_check_box);
@@ -60,6 +72,12 @@ public class CrimeListFragment extends Fragment {
             mTitleTextView.setText(mCrime.getTitle());
             mDateTextView.setText(mCrime.getDate().toString());
             mSolvedCheckBox.setChecked(mCrime.isSolved());
+        }
+
+        @Override
+        public void onClick(View v) {
+            Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getID());
+            startActivity(intent);
         }
     }
 
