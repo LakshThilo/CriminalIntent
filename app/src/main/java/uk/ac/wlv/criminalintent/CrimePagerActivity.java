@@ -51,6 +51,12 @@ public class CrimePagerActivity  extends FragmentActivity {
             }
         });
 
+        for(int i=0; i<mCrimes.size(); i++){
+            if(mCrimes.get(i).getID().equals(crimeId)){
+                mViewPager.setCurrentItem(i);
+                break;
+            }
+        }
 
     }
 }
