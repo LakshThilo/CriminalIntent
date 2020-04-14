@@ -20,7 +20,7 @@ import androidx.fragment.app.DialogFragment;
 
 
 public class DatePickerFragment extends DialogFragment {
-    private static final String EXTRA_DATE = "uk.ac.wlv.criminalintent.date";
+    public static final String EXTRA_DATE = "uk.ac.wlv.criminalintent.date";
     private static final String ARG_DATE = "date";
     private DatePicker mDatePicker;
 
@@ -64,7 +64,7 @@ public class DatePickerFragment extends DialogFragment {
                 .create();
     }
     private void sendResult(int resultCode, Date date) {
-        if (getTargetFragment() == null) return;;
+        if (getTargetFragment() == null) return;
         Intent intent = new Intent();
         intent.putExtra(EXTRA_DATE, date);
         getTargetFragment().onActivityResult(getTargetRequestCode(), resultCode, intent);

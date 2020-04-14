@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
@@ -16,7 +17,7 @@ import androidx.viewpager.widget.ViewPager;
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity  extends FragmentActivity {
+public class CrimePagerActivity  extends AppCompatActivity {
 
     private static final String EXTRA_CRIME_ID = "uk.ac.wlv.criminalintent.crime_id";
     private ViewPager mViewPager;

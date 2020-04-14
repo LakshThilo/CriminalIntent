@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.style.LeadingMarginSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -39,6 +42,32 @@ public class CrimeListFragment extends Fragment {
         updateUI();
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_crime_list, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menu_item_new_crime:
+                Crime crime = new Crime();
+                CrimeLab.get(getActivity()).addCrime(crime);
+                Intent intent = CrimePagerActivity.newIntent(getActivity(), crime.getID());
+                startActivity(intent);
+                return true;
+             default:
+                 return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void updateUI() {
 
         CrimeLab crimeLab = CrimeLab.get(getActivity());
@@ -47,8 +76,11 @@ public class CrimeListFragment extends Fragment {
            mAdapter = new CrimeAdapter(crimes);
            mCrimeRecyclerView.setAdapter(mAdapter);
        }else {
+           mAdapter.setCrimes(crimes);
            mAdapter.notifyDataSetChanged();
        }
+
+
 
     }
 
@@ -85,10 +117,13 @@ public class CrimeListFragment extends Fragment {
 
         private List<Crime> mCrimes;
 
-        public CrimeAdapter(List<Crime> crimes){
+        public void setCrimes(List<Crime> crimes){
             mCrimes = crimes;
         }
 
+        public CrimeAdapter(List<Crime> crimes){
+            mCrimes = crimes;
+        }
 
         @NonNull
         @Override
