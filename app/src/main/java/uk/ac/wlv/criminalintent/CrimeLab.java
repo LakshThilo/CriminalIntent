@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import uk.ac.wlv.criminalintent.database.CrimeBaseHelper;
 import uk.ac.wlv.criminalintent.database.CrimeDbSchema;
+import java.io.File;
 
 public class CrimeLab {
 
@@ -19,6 +20,11 @@ public class CrimeLab {
     private List<Crime> mCrimes;
     private Context mContext;
     private SQLiteDatabase mDatabase;
+
+    public File getPhotoFile(Crime crime){
+        File fileDir = mContext.getFilesDir();
+        return new File(fileDir, crime.getPhotoFilename());
+    }
 
     public static  CrimeLab get(Context context){
         if(sCrimeLab == null){
