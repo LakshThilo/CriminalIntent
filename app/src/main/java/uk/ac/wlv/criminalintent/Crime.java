@@ -9,6 +9,16 @@ public class Crime {
     private UUID mID;
     private String mTitle;
     private Date mDate;
+    private boolean mSolved;
+    private String mSuspect;
+
+    public String getSuspect() {
+        return mSuspect;
+    }
+
+    public void setSuspect(String suspect) {
+        mSuspect = suspect;
+    }
 
     public boolean isSolved() {
         return mSolved;
@@ -17,8 +27,6 @@ public class Crime {
     public void setSolved(boolean solved) {
         mSolved = solved;
     }
-
-    private boolean mSolved;
 
     public Date getDate() {
         return mDate;
